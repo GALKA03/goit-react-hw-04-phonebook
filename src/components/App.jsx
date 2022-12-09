@@ -14,11 +14,9 @@ export function App() {
   ]);
   const [filter, setFilter] = useState('')
 
-
-
   const addContacts = ({ name, number }) => {
     const showContacts = { name, number, id: nanoid(), }
-    console.log(showContacts)
+    console.log('showContacts',showContacts)
     const { contacts } = this.state;
     if (contacts.find(contact => contact.name === name)) {
       alert(`${name} is already in contacts`);
