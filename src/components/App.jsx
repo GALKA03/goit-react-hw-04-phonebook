@@ -13,7 +13,12 @@ export function App() {
     { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
   ]);
   const [filter, setFilter] = useState('')
-
+const handleAddFilter = () => {
+//     //const normalizedFilter = filter.toLowerCase();
+    return contacts.filter(elem =>
+      elem.name.toLowerCase().includes(filter),
+    );
+  }
   const addContacts = ({ name, number }) => {
     const showContacts = { name, number, id: nanoid(), }
     console.log('showContacts',showContacts)
@@ -24,14 +29,32 @@ export function App() {
     }
     else {
       setContacts(contacts)({
-        contacts: [showContacts, ...contacts]
+       // setContacts,setFilter
+      setContacts: [showContacts, ...contacts]
         
       })
     }
   }
-
+ const HandleChangeFilterInput = e => {
+//[e.target.name]: e.target.value,
+const{ name,value}=e.target
+    console.log(name)
+    switch (name) {
+      case 'filter':
+       setFilter(value);
+        break;
+      default:
+        return
+}
+  }
+       
+   const  deliteContacts = (id) => {
+   setContacts: prevState.contacts.filter((contact) => contact.id !== id)
+     }
+   }  
+    
  
-    const addFilter = this.handleAddFilter()
+   // const addFilter = this.handleAddFilter()
     return (
       <Conteiner>
         <h1 style={{
@@ -44,8 +67,8 @@ export function App() {
           textAlign: 'center',
           color: 'red',
         }}>Contacts</h2>
-        <Filter filter={filter} onChange={this.HandleChangeFilterInput} />
-        <Contacts contacts={addFilter} onRemove={this.deliteContacts} />
+        <Filter filter={filter} onChange={HandleChangeFilterInput} />
+        <Contacts contacts={handleAddFilter} onRemove={this.deliteContacts} />
       </Conteiner>
 
     )
