@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { nanoid } from 'nanoid'
 import { Conteiner } from "./App.styles";
 import { Filter } from "./Filter/Filter";
@@ -6,52 +6,62 @@ import Form from "./Form/Form";
 import { Contacts } from "./Contacts/Contacts";
 
 export function App() {
-  const [contacts, setContacts] = useState([
-    { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-    { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-    { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-    { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-  ]);
+  const [contacts, setContacts] = useState(() => {
+    return JSON.parse(localStorage.getItem('contacts')) ?? ''
+  })
+console.log('[contacts, setContacts] ',[contacts, setContacts] )
+  useEffect(() => {
+    console.log('contacts useEffect')
+  window.localStorage.setItem('contacts',JSON.stringify(contacts))
+}, [contacts])
   const [filter, setFilter] = useState('')
-const handleAddFilter = () => {
-//     //const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(elem =>
+  console.log('[filter, setFilter]',[filter, setFilter] )
+  
+
+  // const valueFilter = () => {
+  //  contacts([{ id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+  //   { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+  //   { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+  //   { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+  // ]) 
+  // } 
+//console.log(valueFilter)
+  const handleAddFilter = () => {
+  return contacts.filter(elem =>
       elem.name.toLowerCase().includes(filter),
     );
   }
-  const addContacts = ({ name, number }) => {
-    const showContacts = { name, number, id: nanoid(), }
-    console.log('showContacts',showContacts)
-    const { contacts } = this.state;
+  
+  const addContacts = (name, number) => {
+  const showContacts = { name, number, id: nanoid() };
     if (contacts.find(contact => contact.name === name)) {
       alert(`${name} is already in contacts`);
       return;
     }
-    else {
-      setContacts(contacts)({
-       // setContacts,setFilter
-      setContacts: [showContacts, ...contacts]
-        
-      })
+  else if (!name || !number) {
+         alert('some file is empty')
+            return false;
     }
+    
+    else {
+       setContacts(contacts => [showContacts, ...contacts]) 
+   
+    }
+    
   }
+
+  const  deliteContacts = (id) => {
+  setContacts(prevContacts => prevContacts.filter((contact) => contact.id !== id))
+
+    }
  const HandleChangeFilterInput = e => {
 //[e.target.name]: e.target.value,
-const{ name,value}=e.target
-    console.log(name)
-    switch (name) {
-      case 'filter':
-       setFilter(value);
-        break;
-      default:
-        return
+setFilter(e.target.value)
 }
-  }
+  
        
-   const  deliteContacts = (id) => {
-   setContacts: prevState.contacts.filter((contact) => contact.id !== id)
-     }
-   }  
+
+    
     
  
    // const addFilter = this.handleAddFilter()
@@ -67,14 +77,13 @@ const{ name,value}=e.target
           textAlign: 'center',
           color: 'red',
         }}>Contacts</h2>
-        <Filter filter={filter} onChange={HandleChangeFilterInput} />
-        <Contacts contacts={handleAddFilter} onRemove={this.deliteContacts} />
+         <Filter filter={filter} onChange={HandleChangeFilterInput} /> 
+         <Contacts contacts={handleAddFilter} onRemove={deliteContacts} /> 
       </Conteiner>
 
     )
   
-
-}
+      }
 
 
 

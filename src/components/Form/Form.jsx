@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FormStyled,InputStyle,Btn} from './Form.styled';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 
 
 export default function Form() {
@@ -10,7 +10,6 @@ const [number, setNumber] = useState('');
   
   const handelChange = e => {
     const{ name,value}=e.target
-    console.log(name)
     switch (name) {
       case 'name':
        setName(value);
@@ -22,8 +21,35 @@ const [number, setNumber] = useState('');
         return
 }
   }
+
+  const hendleFormSubmit = e => {
+    e.preventDefault();
+   // addContacts(name,number);
+      resetName();
+    resetNumber(); 
+  }
+  
+
+ //const validateFormSubmit = () => {
+    //const { addContacts } = this.props;
+   //setName( name )setNumber(setNumber)
+      
+ //return  //addContacts
+      
+        
+     //}
+  
+const resetName = () => {
+    setName('')  
+  };
+  const resetNumber = () => {
+    setNumber('')
+  }
+
+
+
 return (   
-           <FormStyled>
+           <FormStyled onSubmit={hendleFormSubmit}>
         <label>
        Name
                     <InputStyle
@@ -56,7 +82,9 @@ return (
     }
 
 
-
+// Form.propTypes = {
+//   onSubmit: PropTypes.func.isRequired,
+// };
 
 
 
@@ -79,7 +107,6 @@ return (
 //     if (!isValid) {
 //         return
 //     } 
-//  //addContacts({ id: nanoid(), name, number });
 //   addContacts(this.state)
 //     this.reset()
 //     }
