@@ -14,8 +14,6 @@ export const Contacts = ({ contacts, onRemove }) => {
     if (contacts.length === 0) {
         return null;
     }
-
-
        //console.log(contacts)
     return( 
     <ContactsConteiner>

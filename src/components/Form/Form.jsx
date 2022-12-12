@@ -3,7 +3,7 @@ import { FormStyled,InputStyle,Btn} from './Form.styled';
 //import PropTypes from 'prop-types';
 
 
-export default function Form() {
+export default function Form({addContact}) {
   const [name, setName] = useState('');
 const [number, setNumber] = useState('');
   //const [password, setPassword]=useState('')
@@ -24,20 +24,10 @@ const [number, setNumber] = useState('');
 
   const hendleFormSubmit = e => {
     e.preventDefault();
-   // addContacts(name,number);
-      resetName();
+    addContact({ name, number });
+    resetName();
     resetNumber(); 
   }
-  
-
- //const validateFormSubmit = () => {
-    //const { addContacts } = this.props;
-   //setName( name )setNumber(setNumber)
-      
- //return  //addContacts
-      
-        
-     //}
   
 const resetName = () => {
     setName('')  
