@@ -35,7 +35,7 @@ export function App() {
   const  deliteContacts = (id) => {
   setContacts(prevContacts => prevContacts.filter((contact) => contact.id !== id))
     }
-  const handleChangeFilterInput = e => setFilter(e.currentTarget.value);
+  const handleChangeFilterInput = e => setFilter(e.target.value);
    
 
     return (
@@ -50,8 +50,8 @@ export function App() {
           textAlign: 'center',
           color: 'red',
         }}>Contacts</h2>
-        {contacts.length > 1 && <Filter filter={filter} onChange={handleChangeFilterInput} />}
-        {contacts.length >0 && <Contacts contacts={handleAddFilter} onRemove={deliteContacts} />} 
+        <Filter filter={filter} onChange={handleChangeFilterInput} />
+        <Contacts contacts={handleAddFilter()} onRemove={deliteContacts} />
       </Conteiner>
 
     )
