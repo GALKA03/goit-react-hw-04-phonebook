@@ -6,52 +6,41 @@ import Form from "./Form/Form";
 import { Contacts } from "./Contacts/Contacts";
 
 export function App() {
-  const [contacts, setContacts] = useState(() => {
-    return JSON.parse(localStorage.getItem('contacts')) ?? ''
-  })
-  //console.log('[contacts, setContacts] ', [contacts, setContacts])
-  useEffect(() => {
-    console.log('contacts useEffect')
-    window.localStorage.setItem('contacts', JSON.stringify(contacts))
-  }, [contacts])
+  const [contacts, setContacts] = useState(JSON.parse(localStorage.getItem('contacts')) ?? []);
+  
   const [filter, setFilter] = useState('')
-  //console.log('[filter, setFilter]', [filter, setFilter])
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts))
+  }, [contacts])
+
+  
   
   //визуал контактов
   const handleAddFilter = () => {
-    //const normalizedFilter = filter.toLowerCase();
+    const normalizedFilter = filter.toLowerCase();
     return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter),
+      contact.name.toLowerCase().includes(normalizedFilter),
     );
   }
-  
-  const addContact = (name, number) => {
-    const showContacts = { name, number, id: nanoid() };
-    console.log(showContacts)
-      if (name === '' || number === '') {
+  const addContact = ({ name, number }) => {
+    const showContacts = {name, number , id: nanoid() };
+    console.log('showContacts',showContacts)
+    if (name === '' || number === '') {
       alert('Please enter all fields!');
       return;
     }
-     else if (contacts.find(contact => contact.name === name)) {
-      console.log('contacts',contacts)
-        alert(`${name} is already in contacts`);
+   if (contacts.find(contact => contact.name === name)) {
+     alert(`${name} is already in contacts`);
       return;
     }
  else{setContacts(contacts => [showContacts, ...contacts]) } 
   }
-
   const  deliteContacts = (id) => {
   setContacts(prevContacts => prevContacts.filter((contact) => contact.id !== id))
-
     }
- const handleChangeFilterInput = e => {
-//[e.target.name]: e.target.value,
-   setFilter(e.target.value)
+  const handleChangeFilterInput = e => setFilter(e.currentTarget.value);
    
-}
-  
- 
-   // const addFilter = this.handleAddFilter()
+
     return (
       <Conteiner>
         <h1 style={{
@@ -64,8 +53,8 @@ export function App() {
           textAlign: 'center',
           color: 'red',
         }}>Contacts</h2>
-         <Filter filter={filter} onChange={handleChangeFilterInput} /> 
-         <Contacts contacts={handleAddFilter} onRemove={deliteContacts} /> 
+        {contacts.length > 1 && <Filter filter={filter} onChange={handleChangeFilterInput} />}
+        {contacts.length >0 && <Contacts contacts={handleAddFilter} onRemove={deliteContacts} />} 
       </Conteiner>
 
     )

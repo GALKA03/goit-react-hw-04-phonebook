@@ -21,7 +21,6 @@ const [number, setNumber] = useState('');
         return
 }
   }
-
   const hendleFormSubmit = e => {
     e.preventDefault();
     addContact({ name, number });
