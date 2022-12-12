@@ -71,7 +71,7 @@ return (
     }
 
 
-// Form.propTypes = {
+//  Form.propTypes = {
 //   onSubmit: PropTypes.func.isRequired,
 // };
 
