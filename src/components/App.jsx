@@ -12,9 +12,6 @@ export function App() {
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts))
   }, [contacts])
-
-  
-  
   //визуал контактов
   const handleAddFilter = () => {
     const normalizedFilter = filter.toLowerCase();
