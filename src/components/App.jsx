@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Notiflix from 'notiflix';
 import { nanoid } from 'nanoid'
 import { Conteiner } from "./App.styles";
 import { Filter } from "./Filter/Filter";
@@ -23,11 +24,11 @@ export function App() {
     const showContacts = {name, number , id: nanoid() };
     console.log('showContacts',showContacts)
     if (name === '' || number === '') {
-      alert('Please enter all fields!');
+      Notiflix.Notify.warning('Please enter all fields!');
       return;
     }
    if (contacts.find(contact => contact.name === name)) {
-     alert(`${name} is already in contacts`);
+    Notiflix.Notify.failure(`${name} is already in contacts`);
       return;
     }
  else{setContacts(contacts => [showContacts, ...contacts]) } 
@@ -36,8 +37,6 @@ export function App() {
   setContacts(prevContacts => prevContacts.filter((contact) => contact.id !== id))
     }
   const handleChangeFilterInput = e => setFilter(e.target.value);
-   
-
     return (
       <Conteiner>
         <h1 style={{
